@@ -93,7 +93,12 @@ class DownloadHandler(BaseHTTPRequestHandler):
         output_template = os.path.join(tmp_dir, '%(title)s.%(ext)s')
 
         try:
-            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10']
+            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10', '--sleep-requests', '1', '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36']
+
+            # Use cookies file if present alongside the script
+            cookies_path = os.path.join(os.path.dirname(__file__), 'cookies.txt')
+            if os.path.isfile(cookies_path):
+                cmd += ['--cookies', cookies_path]
 
             if format_type == 'mp3':
                 print(f'[DownloadServer] Format: mp3 (audio only)')
