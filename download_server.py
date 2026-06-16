@@ -93,10 +93,7 @@ class DownloadHandler(BaseHTTPRequestHandler):
         output_template = os.path.join(tmp_dir, '%(title)s.%(ext)s')
 
         try:
-            cmd = ['yt-dlp', '--concurrent-fragments', '5']
-
-            if FFMPEG_AVAILABLE:
-                cmd += ['--ffmpeg-location', 'ffmpeg']
+            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10']
 
             if format_type == 'mp3':
                 print(f'[DownloadServer] Format: mp3 (audio only)')
