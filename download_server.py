@@ -93,7 +93,11 @@ class DownloadHandler(BaseHTTPRequestHandler):
         output_template = os.path.join(tmp_dir, '%(title)s.%(ext)s')
 
         try:
-            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10', '--sleep-requests', '1', '--js-runtime', 'node', '--extractor-args', 'youtube:player_client=tv', '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36']
+            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10', '--sleep-requests', '1', '--js-runtime', 'node:/usr/bin/node', '--user-agent', 'Mozilla/5.0']
+
+            # Try alternate node path if primary doesn't exist
+            if not os.path.isfile('/usr/bin/node') and os.path.isfile('/usr/bin/nodejs'):
+                cmd[cmd.index('node:/usr/bin/node')] = 'node:/usr/bin/nodejs'
 
             # Use cookies file if present alongside the script
             cookies_path = os.path.join(os.path.dirname(__file__), 'cookies.txt')
