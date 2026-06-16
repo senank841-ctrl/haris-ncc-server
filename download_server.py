@@ -98,7 +98,10 @@ class DownloadHandler(BaseHTTPRequestHandler):
             # Use cookies file if present alongside the script
             cookies_path = os.path.join(os.path.dirname(__file__), 'cookies.txt')
             if os.path.isfile(cookies_path):
+                print(f'[DownloadServer] Using cookies: {cookies_path}')
                 cmd += ['--cookies', cookies_path]
+            else:
+                print(f'[DownloadServer] No cookies.txt found at {cookies_path}')
 
             if format_type == 'mp3':
                 print(f'[DownloadServer] Format: mp3 (audio only)')

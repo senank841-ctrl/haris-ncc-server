@@ -3,6 +3,6 @@ RUN apt-get update && apt-get install -y ffmpeg nodejs npm && rm -rf /var/lib/ap
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY download_server.py .
+COPY download_server.py cookies.txt ./
 EXPOSE 3001
 CMD ["python", "download_server.py"]
