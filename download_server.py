@@ -93,11 +93,7 @@ class DownloadHandler(BaseHTTPRequestHandler):
         output_template = os.path.join(tmp_dir, '%(title)s.%(ext)s')
 
         try:
-            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10', '--sleep-requests', '1', '--js-runtime', 'node:/usr/bin/node', '--user-agent', 'Mozilla/5.0']
-
-            # Try alternate node path if primary doesn't exist
-            if not os.path.isfile('/usr/bin/node') and os.path.isfile('/usr/bin/nodejs'):
-                cmd[cmd.index('node:/usr/bin/node')] = 'node:/usr/bin/nodejs'
+            cmd = ['yt-dlp', '--concurrent-fragments', '5', '--extractor-retries', '10', '--sleep-requests', '1', '--js-runtime', 'node:/usr/bin/node', '--remote-components', 'ejs:github', '--user-agent', 'Mozilla/5.0']
 
             # Use cookies file if present alongside the script
             cookies_path = os.path.join(os.path.dirname(__file__), 'cookies.txt')
